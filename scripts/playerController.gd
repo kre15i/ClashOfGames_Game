@@ -15,14 +15,15 @@ func _input(event):
 		pass
 
 func _physics_process(delta):
-	var h_rot = $camroot/h.global_transform.basis.get_euler().y
-	
-	direction = Vector3(Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left"),
-				0,
-				Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")).rotated(Vector3.UP, h_rot).normalized()
 
-	
+
+
 	if Input.is_action_pressed("ui_up") ||  Input.is_action_pressed("ui_down") ||  Input.is_action_pressed("ui_left") ||  Input.is_action_pressed("ui_right"):
+		var h_rot = $camroot/h.global_transform.basis.get_euler().y
+		direction = Vector3(Input.get_action_strength("ui_left") - Input.get_action_strength("ui_right"),
+					0,
+					Input.get_action_strength("ui_up") - Input.get_action_strength("ui_down")).rotated(Vector3.UP, h_rot).normalized()
+				
 		if Input.is_action_pressed("sprint"):
 			movement_speed = run_speed
 		else:
@@ -38,4 +39,4 @@ func _physics_process(delta):
 	else:
 		vertical_velocity = 0
 	
-	$model.rotation.y = lerp_angle($model.rotation.y, atan2(direction.x, direction.z), delta * angular_acceleration)
+	$Player.rotation.y = lerp_angle($Player.rotation.y, atan2(-direction.x, -direction.z), delta * angular_acceleration)
