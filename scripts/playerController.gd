@@ -1,40 +1,41 @@
 extends KinematicBody
 
+var direction = Vector3.FORWARD
+var movement_speed = 0
+var walk_speed = 5
+var run_speed = 10
+var velocity = Vector3.ZERO
+var acceleration = 6
+var vertical_velocity = 0
+var gravity = 20
+var angular_acceleration = 7
 
-onready var camera = $pivot/Camera
-
-var gravity = -30
-var max_speed = 8
-var mouse_sensitivity = 0.002 # radians/pixel
-
-var velocity = Vector3()
-
-
-func get_input():
-	var input_dir = Vector3()
-	# desired move in camera direction
-	if Input.is_action_pressed("ui_up"):
-		input_dir += -global_transform.basis.z
-	if Input.is_action_pressed("ui_down"):
-		input_dir += global_transform.basis.z
-	if Input.is_action_pressed("ui_left"):
-		input_dir += -global_transform.basis.x
-	if Input.is_action_pressed("ui_right"):
-		input_dir += global_transform.basis.x
-	input_dir = input_dir.normalized()
-	return input_dir
-
-
-func _unhandled_input(event):
-	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		rotate_y(-event.relative.x * mouse_sensitivity)
-		$pivot.rotate_x(-event.relative.y * mouse_sensitivity)
-		$pivot.rotation.x = clamp($pivot.rotation.x, -1.2, 1.2)
+func _input(event):
+	if event is InputEventKey:
+		pass
 
 func _physics_process(delta):
-	velocity.y += gravity * delta
-	var desired_velocity = get_input() * max_speed
+	var h_rot = $camroot/h.global_transform.basis.get_euler().y
+	
+	direction = Vector3(Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left"),
+				0,
+				Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")).rotated(Vector3.UP, h_rot).normalized()
 
-	velocity.x = desired_velocity.x
-	velocity.z = desired_velocity.z
-	velocity = move_and_slide(velocity, Vector3.UP, true)
+	
+	if Input.is_action_pressed("ui_up") ||  Input.is_action_pressed("ui_down") ||  Input.is_action_pressed("ui_left") ||  Input.is_action_pressed("ui_right"):
+		if Input.is_action_pressed("sprint"):
+			movement_speed = run_speed
+		else:
+			movement_speed = walk_speed
+	else:
+		movement_speed = 0
+		
+	velocity = lerp(velocity, direction * movement_speed, delta * acceleration)
+	move_and_slide(velocity + Vector3.DOWN * vertical_velocity, Vector3.UP)
+	
+	if !is_on_floor():
+		vertical_velocity += gravity * delta
+	else:
+		vertical_velocity = 0
+	
+	$model.rotation.y = lerp_angle($model.rotation.y, atan2(direction.x, direction.z), delta * angular_acceleration)
