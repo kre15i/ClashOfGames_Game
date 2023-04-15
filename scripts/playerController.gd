@@ -12,6 +12,8 @@ var angular_acceleration = 7
 var jump_magnitude = 15
 var weight_on_ground = 7
 
+onready var gun_controller = $Player/weaponController
+
 
 func _input(event):
 	if event is InputEventKey:
@@ -48,3 +50,8 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("Jump"):
 			vertical_velocity = jump_magnitude
 	
+
+#shoot shoot
+func _process(delta):
+	if Input.is_action_pressed("shoot"):
+		gun_controller.shoot()

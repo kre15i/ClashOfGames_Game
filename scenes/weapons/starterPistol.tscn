@@ -1,18 +1,33 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scripts/weapons/starterPistol.gd" type="Script" id=1]
+[ext_resource path="res://scenes/Bullet.tscn" type="PackedScene" id=2]
 
 [sub_resource type="CubeMesh" id=1]
 
 [sub_resource type="BoxShape" id=2]
 
 [node name="starterPistol" type="Spatial"]
+script = ExtResource( 1 )
+Bullet = ExtResource( 2 )
+muzzle_speed = 70
+millis_between_shots = 500
 
-[node name="StaticBody" type="StaticBody" parent="."]
+[node name="holder" type="StaticBody" parent="."]
 
-[node name="MeshInstance" type="MeshInstance" parent="StaticBody"]
-transform = Transform( 0.204, 0, 0, 0, 0.161, 0, 0, 0, 1, 0, 0, 0 )
+[node name="MeshInstance" type="MeshInstance" parent="holder"]
+transform = Transform( 0.204, 0, 0, 0, -7.03753e-09, 1, 0, -0.161, -4.37114e-08, 0, 0, 0 )
 mesh = SubResource( 1 )
 skeleton = NodePath("../..")
 
-[node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
+[node name="CollisionShape" type="CollisionShape" parent="holder"]
 transform = Transform( 0.204, 0, 0, 0, 0.161, 0, 0, 0, 1, 0, 0, 0 )
 shape = SubResource( 2 )
+
+[node name="Muzzle" type="Position3D" parent="."]
+transform = Transform( -1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 0, -0.866273, 0 )
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

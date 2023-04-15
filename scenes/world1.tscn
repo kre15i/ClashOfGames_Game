@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/textures/tileable_grass.png" type="Texture" id=1]
 [ext_resource path="res://scenes/player.tscn" type="PackedScene" id=2]
@@ -11,6 +11,10 @@ material = SubResource( 1 )
 size = Vector2( 10, 10 )
 
 [sub_resource type="BoxShape" id=3]
+
+[sub_resource type="CubeMesh" id=4]
+
+[sub_resource type="BoxShape" id=5]
 
 [node name="Welt1" type="Spatial"]
 
@@ -28,3 +32,23 @@ shape = SubResource( 3 )
 
 [node name="player" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.01793, 0 )
+
+[node name="objects" type="Spatial" parent="."]
+
+[node name="StaticBody" type="StaticBody" parent="objects"]
+transform = Transform( 3.35203, 0, 0, 0, 0.981581, -1.22596, 0, 0.191049, 6.29882, 0, 0, -10.0624 )
+
+[node name="MeshInstance" type="MeshInstance" parent="objects/StaticBody"]
+mesh = SubResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="objects/StaticBody"]
+shape = SubResource( 5 )
+
+[node name="StaticBody2" type="StaticBody" parent="objects"]
+transform = Transform( 3.35203, 0, 0, 0, 0.282827, -6.15502, 0, 2.65763, 5.02866, 0, -1.38722, 14.4976 )
+
+[node name="MeshInstance" type="MeshInstance" parent="objects/StaticBody2"]
+mesh = SubResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="objects/StaticBody2"]
+shape = SubResource( 5 )
