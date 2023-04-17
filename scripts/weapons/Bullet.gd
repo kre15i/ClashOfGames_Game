@@ -1,5 +1,4 @@
-extends StaticBody
-
+extends Spatial
 
 export var speed = 70
 const KILL_TIME = 2
@@ -12,3 +11,8 @@ func _physics_process(delta):
 	timer += delta
 	if timer >= KILL_TIME:
 		queue_free()
+
+
+func _on_Area_body_entered(body):
+	print("hit")
+	queue_free()
