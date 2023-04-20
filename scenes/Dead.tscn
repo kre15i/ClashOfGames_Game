@@ -1,0 +1,68 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/SedgwickAveDisplay-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/textures/istockphoto-1196215434-612x612.jpg" type="Texture" id=2]
+[ext_resource path="res://assets/PermanentMarker-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://scripts/Dead.gd" type="Script" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 66
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 3 )
+
+[node name="Dead" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+
+[node name="Background" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Istockphoto-1196215434-612X612" type="Sprite" parent="."]
+modulate = Color( 0.588235, 0.282353, 0.282353, 1 )
+self_modulate = Color( 1, 0, 0, 1 )
+position = Vector2( 511.5, 299 )
+scale = Vector2( 1.68791, 1.4902 )
+texture = ExtResource( 2 )
+
+[node name="Text" type="Control" parent="."]
+margin_right = 1028.0
+margin_bottom = 598.0
+
+[node name="Label" type="Label" parent="Text"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -137.0
+margin_top = -41.5
+margin_right = 137.0
+margin_bottom = 41.5
+custom_fonts/font = SubResource( 1 )
+text = "YOU DIED"
+
+[node name="buttons" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Button" type="Button" parent="buttons"]
+margin_left = 454.0
+margin_top = 391.0
+margin_right = 564.0
+margin_bottom = 421.0
+custom_fonts/font = SubResource( 2 )
+text = "RETRY"
+
+[node name="Button2" type="Button" parent="buttons"]
+margin_left = 438.0
+margin_top = 432.0
+margin_right = 585.0
+margin_bottom = 462.0
+custom_fonts/font = SubResource( 2 )
+text = "MAIN MENU"
+
+[connection signal="pressed" from="buttons/Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="buttons/Button2" to="." method="_on_Button2_pressed"]

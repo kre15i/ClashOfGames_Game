@@ -11,7 +11,7 @@
 script = ExtResource( 1 )
 Bullet = ExtResource( 2 )
 muzzle_speed = 70
-millis_between_shots = 500
+millis_between_shots = 200
 
 [node name="holder" type="StaticBody" parent="."]
 

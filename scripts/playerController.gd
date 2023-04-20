@@ -12,8 +12,12 @@ var angular_acceleration = 7
 var jump_magnitude = 15
 var weight_on_ground = 7
 
+onready var survived_timer = $Timer
+
 onready var gun_controller = $Player/weaponController
 
+func _ready():
+	survived_timer.start()
 
 func _input(event):
 	if event is InputEventKey:

@@ -8,11 +8,31 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node",
+"class": "Wave",
+"language": "GDScript",
+"path": "res://scripts/Node.gd"
+}, {
+"base": "Node",
+"class": "stats",
+"language": "GDScript",
+"path": "res://scripts/stats.gd"
+} ]
+_global_script_class_icons={
+"Wave": "",
+"stats": ""
+}
+
 [application]
 
 config/name="ClashOfGames_Game"
 run/main_scene="res://scenes/world1.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Global="*res://scripts/Global.gd"
 
 [gui]
 
